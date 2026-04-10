@@ -6,9 +6,19 @@
   <title>JP Warner – Front-End Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    :root {
+      --navy:   #1a2b4a;
+      --accent: #c7511f;
+      --bg:     #f4f6f9;
+      --card:   #ffffff;
+      --text:   #2d2d2d;
+      --muted:  #666;
+      --border: #dde3ed;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -16,16 +26,47 @@
     }
 
     body {
-      font-family: "Inter", sans-serif;
-      background: #f4f6f9;
-      color: #222;
+      font-family: "DM Sans", sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    /* Hero */
+    /* ── Hero ── */
     .hero {
-      background: linear-gradient(135deg, #1a2b4a 0%, #2e4a7a 100%);
+      background: var(--navy);
       color: #fff;
-      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Noise texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    /* Mesh gradient accent */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(199,81,31,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 32px;
       display: flex;
       align-items: center;
       gap: 48px;
@@ -37,76 +78,117 @@
       object-fit: cover;
       object-position: top;
       border-radius: 10px;
-      border: 3px solid rgba(255,255,255,0.2);
+      border: 3px solid rgba(255,255,255,0.15);
       flex-shrink: 0;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
 
     .hero-text h1 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      margin-bottom: 8px;
+      font-family: "DM Serif Display", serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
     }
 
     .hero-text .subtitle {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.75);
-      margin-bottom: 6px;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 12px;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
     }
 
     .hero-text .clearance {
       display: inline-block;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
       border-radius: 4px;
-      padding: 3px 10px;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.9);
-      margin-top: 8px;
+      padding: 4px 10px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.88);
     }
 
-    /* Content */
+    .hero-text .hero-linkedin {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: #0a66c2;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .hero-text .hero-linkedin:hover {
+      opacity: 0.85;
+    }
+
+    @media (max-width: 560px) {
+      .hero-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 40px 24px;
+        gap: 24px;
+      }
+
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+    }
+
+    /* ── Content ── */
     .content {
       max-width: 900px;
-      margin: 48px auto;
+      margin: 52px auto;
       padding: 0 32px;
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 44px;
     }
 
-    /* Section */
+    /* ── Section labels ── */
     .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.7rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #2e4a7a;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #2e4a7a;
-      display: inline-block;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: block;
     }
 
+    /* ── About ── */
     .intro p {
       font-size: 1.05rem;
-      line-height: 1.8;
+      line-height: 1.85;
       color: #444;
     }
 
-    /* Skills */
+    /* ── Skills ── */
     .skill-groups {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
     }
 
     .skill-group h3 {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #888;
-      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+      color: #aaa;
+      margin-bottom: 10px;
     }
 
     .skill-group ul {
@@ -117,64 +199,118 @@
     }
 
     .skill-group li {
-      background: #fff;
-      border: 1px solid #dde3ed;
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 5px 12px;
-      font-size: 0.88rem;
+      padding: 5px 13px;
+      font-size: 0.875rem;
       color: #333;
-      transition: background 0.15s, border-color 0.15s;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
     }
 
     .skill-group li:hover {
-      background: #eef2f9;
-      border-color: #2e4a7a;
+      background: #fff4ef;
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
-    /* Links */
-    .links {
+    /* ── Featured / Project items ── */
+    .featured-item {
+      border-left: 3px solid var(--accent);
+      padding-left: 18px;
+    }
+
+    .featured-meta {
       display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
     }
 
-    .links a {
+    .featured-title {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+
+    a.featured-title:hover {
+      text-decoration: underline;
+    }
+
+    .featured-desc {
+      font-size: 0.92rem;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .project-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .project-links a {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 6px;
-      font-size: 0.95rem;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      font-size: 0.85rem;
       font-weight: 500;
+      color: var(--navy);
       text-decoration: none;
-      transition: opacity 0.15s, transform 0.15s;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
     }
 
-    .links a:hover {
-      opacity: 0.88;
-      transform: translateY(-1px);
+    .project-links a:hover {
+      background: #fff4ef;
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
-    .links .btn-linkedin {
-      background: #0a66c2;
-      color: #fff;
+    /* ── Staggered fade-in ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .links .btn-project {
-      background: #fff;
-      color: #1a2b4a;
-      border: 1px solid #c0cce0;
+    .content section {
+      animation: fadeUp 0.5s ease both;
     }
+
+    .content section:nth-child(1) { animation-delay: 0.05s; }
+    .content section:nth-child(2) { animation-delay: 0.15s; }
+    .content section:nth-child(3) { animation-delay: 0.25s; }
+    .content section:nth-child(4) { animation-delay: 0.35s; }
   </style>
 </head>
 <body>
 
   <div class="hero">
-    <img src="profile.jpg" alt="JP Warner">
-    <div class="hero-text">
-      <h1>JP Warner</h1>
-      <p class="subtitle">Front-End Engineer &bull; 10+ years at Amazon</p>
-      <span class="clearance">&#128274; Active TS/SCI with Full-Scope Poly</span>
+    <div class="hero-inner">
+      <img src="profile.jpg" alt="JP Warner">
+      <div class="hero-text">
+        <h1>JP Warner</h1>
+        <p class="subtitle">Front-End Engineer &bull; 10+ years at Amazon</p>
+        <div class="hero-badges">
+          <span class="clearance">&#128274; Active TS/SCI with Full-Scope Poly</span>
+          <a class="hero-linkedin" href="https://www.linkedin.com/in/johnpedrowarner/" target="_blank" rel="noopener">
+            <i class="fa-brands fa-linkedin"></i> LinkedIn
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -186,8 +322,8 @@
         I'm a Front-End Engineer with 13+ years of industry experience, including 10+ years
         building secure, highly available, data-centric applications at Amazon. I specialize in
         React and TypeScript, have led major feature work on AWS Cost Explorer, and have served
-        as an on-call escalation engineer for U.S. federal regions. I hold an active TS/SCI
-        clearance with Full-Scope Poly.
+        as an on-call escalation engineer for U.S. federal regions. I have hands-on AWS experience
+        across storage, messaging, infrastructure, and monitoring services. I hold an active TS/SCI clearance with Full-Scope Poly.
       </p>
     </section>
 
@@ -214,16 +350,6 @@
           </ul>
         </div>
         <div class="skill-group">
-          <h3>AWS</h3>
-          <ul>
-            <li>EC2</li>
-            <li>S3</li>
-            <li>SQS</li>
-            <li>API Gateway</li>
-            <li>CloudWatch</li>
-          </ul>
-        </div>
-        <div class="skill-group">
           <h3>Testing</h3>
           <ul>
             <li>Jest</li>
@@ -234,17 +360,40 @@
     </section>
 
     <section>
-      <div class="section-label">Links</div>
-      <div class="links">
-        <a class="btn-linkedin" href="https://www.linkedin.com/in/johnpedrowarner/" target="_blank" rel="noopener">
-          <i class="fa-brands fa-linkedin"></i> LinkedIn
+      <div class="section-label">Featured Work</div>
+      <div class="featured-item">
+        <div class="featured-meta">
+          <i class="fa-solid fa-newspaper"></i>
+          <span>AWS News Blog</span>
+        </div>
+        <a class="featured-title" href="https://aws.amazon.com/blogs/aws/aws-cost-explorer-update-better-filtering-grouping-report-management-ri-reports/" target="_blank" rel="noopener">
+          AWS Cost Explorer Update – Better Filtering &amp; Grouping, Report Management, RI Reports
         </a>
-        <a class="btn-project" href="https://grocery-list-app-jpedrow.s3.us-east-1.amazonaws.com/index.html" target="_blank" rel="noopener">
-          <i class="fa-solid fa-list"></i> Grocery List App (plain JS)
-        </a>
-        <a class="btn-project" href="https://groceries-angular-266785173224-us-east-1-an.s3.us-east-1.amazonaws.com/index.html" target="_blank" rel="noopener">
-          <i class="fa-solid fa-list"></i> Grocery List App (Angular)
-        </a>
+        <p class="featured-desc">
+          I was the lead UI engineer on the enhanced filtering experience for AWS Cost Explorer, used by hundreds of thousands of AWS customers. My work focused on the multi-dimensional filter panel, including the ability to include or exclude specific dimension values when analyzing costs — giving customers significantly more control over how they slice and view their AWS spend.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-label">Personal Projects</div>
+      <div class="featured-item">
+        <div class="featured-meta">
+          <i class="fa-solid fa-code"></i>
+          <span>Side Project</span>
+        </div>
+        <span class="featured-title" style="cursor:default;">Grocery List App</span>
+        <p class="featured-desc">
+          A grocery list manager I built twice — first in plain JavaScript to sharpen my fundamentals, then rebuilt in Angular to explore the framework. Both versions are live.
+        </p>
+        <div class="project-links">
+          <a href="https://grocery-list-app-jpedrow.s3.us-east-1.amazonaws.com/index.html" target="_blank" rel="noopener">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Plain JS version
+          </a>
+          <a href="https://groceries-angular-266785173224-us-east-1-an.s3.us-east-1.amazonaws.com/index.html" target="_blank" rel="noopener">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Angular version
+          </a>
+        </div>
       </div>
     </section>
 
